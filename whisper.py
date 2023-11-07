@@ -118,7 +118,7 @@ def display_page():
         
     def abstract_summary_extraction(transcription):
         response = openai.chat.completions.create(
-            model="gpt-4-vision-preview",
+            model="gpt-4",
             temperature=0,
             messages=[
                 {
