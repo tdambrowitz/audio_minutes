@@ -115,7 +115,7 @@ def display_page():
             'action_items': action_items,
             'sentiment': sentiment
         }
-
+        
     def abstract_summary_extraction(transcription):
         response = openai.chat.completions.create(
             model="gpt-4-vision-preview",
@@ -132,8 +132,8 @@ def display_page():
             ],
             max_tokens=2000,
         )
+        print(response)  # Add this line to inspect the response object
         return response['choices'][0]['message']['content']
-
 
     def key_points_extraction(transcription):
         response = openai.ChatCompletion.create(
