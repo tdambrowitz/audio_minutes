@@ -8,7 +8,7 @@ import time
 from pydub import AudioSegment
 from moviepy.editor import *
 import math
-
+from openai import OpenAI
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
@@ -78,7 +78,7 @@ def display_page():
 
     def transcribe_audio(audio_file_path):
         with open(audio_file_path, 'rb') as audio_file:
-            transcription = openai.Audio.transcribe("whisper-1", audio_file)
+            transcription = client.audio.transcriptions.create("whisper-1", audio_file)
         return transcription['text']
 
     def meeting_minutes(transcription):
@@ -321,7 +321,7 @@ def check_password():
         
         if password == st.secrets["db_password"]:
             st.session_state.is_authenticated = True
-            st.experimental_rerun()
+            st.rerun()
         elif password:
             st.write("Please enter the correct password to proceed.")
             
