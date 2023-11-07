@@ -138,7 +138,7 @@ def display_page():
 
 
     def key_points_extraction(transcription):
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -153,11 +153,13 @@ def display_page():
             ],
             max_tokens=2000,
         )
-        return response['choices'][0]['message']['content']
+        # Access the content directly from the response object's attributes
+        summary_content = response.choices[0].message.content
+        return summary_content
 
 
     def action_item_extraction(transcription):
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -172,10 +174,12 @@ def display_page():
             ],
             max_tokens=2000,
         )
-        return response['choices'][0]['message']['content']
+        # Access the content directly from the response object's attributes
+        summary_content = response.choices[0].message.content
+        return summary_content
 
     def sentiment_analysis(transcription):
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -190,8 +194,10 @@ def display_page():
             ],
             max_tokens=2000,
         )
-        return response['choices'][0]['message']['content']
-
+        # Access the content directly from the response object's attributes
+        summary_content = response.choices[0].message.content
+        return summary_content
+    
     def save_as_docx(minutes, filename):
         doc = Document()
         for key, value in minutes.items():
