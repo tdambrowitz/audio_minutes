@@ -1,5 +1,5 @@
 openai
-docx2txt
+docx
 soundfile
 numpy
 streamlit
