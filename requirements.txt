@@ -1,0 +1,7 @@
+openai
+docx2txt
+soundfile
+numpy
+streamlit
+pydub
+moviepy
