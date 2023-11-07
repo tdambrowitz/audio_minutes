@@ -9,7 +9,7 @@ from pydub import AudioSegment
 from moviepy.editor import *
 import math
 from openai import OpenAI
-openai = OpenAI()
+client = OpenAI()
 
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
