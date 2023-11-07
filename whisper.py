@@ -83,8 +83,8 @@ def display_page():
             transcription = openai.audio.transcriptions.create(
                 model="whisper-1", 
                 file=audio_file
-                )
-        return transcription['text']
+            )
+        return transcription.text  # Here, we use .text instead of ['text']
 
     def meeting_minutes(transcription):
         word_count = len(transcription.split())
