@@ -119,7 +119,7 @@ def display_page():
         }
 
     def abstract_summary_extraction(transcription):
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -138,7 +138,7 @@ def display_page():
 
 
     def key_points_extraction(transcription):
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -157,7 +157,7 @@ def display_page():
 
 
     def action_item_extraction(transcription):
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -175,7 +175,7 @@ def display_page():
         return response['choices'][0]['message']['content']
 
     def sentiment_analysis(transcription):
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
