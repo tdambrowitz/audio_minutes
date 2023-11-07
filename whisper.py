@@ -8,12 +8,9 @@ import time
 from pydub import AudioSegment
 from moviepy.editor import *
 import math
-from openai import OpenAI
+
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-
-client = OpenAI()
-
 
 
 def get_state_variable(var_name, default_value):
@@ -81,12 +78,8 @@ def display_page():
 
     def transcribe_audio(audio_file_path):
         with open(audio_file_path, 'rb') as audio_file:
-            transcription = client.audio.transcriptions.create(
-                model="whisper-1", 
-                file=audio_file, 
-                response_format="text"
-                )
-        return transcription
+            transcription = openai.Audio.transcribe("whisper-1", audio_file)
+        return transcription['text']
 
     def meeting_minutes(transcription):
         word_count = len(transcription.split())
@@ -119,7 +112,7 @@ def display_page():
         }
 
     def abstract_summary_extraction(transcription):
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -138,7 +131,7 @@ def display_page():
 
 
     def key_points_extraction(transcription):
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -157,7 +150,7 @@ def display_page():
 
 
     def action_item_extraction(transcription):
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
@@ -175,7 +168,7 @@ def display_page():
         return response['choices'][0]['message']['content']
 
     def sentiment_analysis(transcription):
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4-vision-preview",
             temperature=0,
             messages=[
