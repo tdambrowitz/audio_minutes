@@ -132,7 +132,7 @@ def display_page():
             ],
             max_tokens=2000,
         )
-        print(response)  # Add this line to inspect the response object
+        st.write(response)  # Add this line to inspect the response object
         return response['choices'][0]['message']['content']
 
     def key_points_extraction(transcription):
