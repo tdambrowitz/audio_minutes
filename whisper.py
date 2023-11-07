@@ -10,6 +10,8 @@ from moviepy.editor import *
 import math
 
 
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+
 
 def get_state_variable(var_name, default_value):
     if 'st_state' not in st.session_state:
@@ -317,7 +319,7 @@ def check_password():
 
             
         
-        if password == "test":
+        if password == st.secrets["db_password"]:
             st.session_state.is_authenticated = True
             st.experimental_rerun()
         elif password:
