@@ -84,8 +84,9 @@ def display_page():
             transcription = client.audio.transcriptions.create(
                 model="whisper-1", 
                 file=audio_file, 
+                response_format="text"
                 )
-        return transcription['text']
+        return transcription
 
     def meeting_minutes(transcription):
         word_count = len(transcription.split())
