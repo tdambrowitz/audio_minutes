@@ -17,7 +17,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 # Streamlit Configuration
 st.set_page_config(
     page_title="Meeting Minutes",
-    page_icon="👜"
+    page_icon=":microphone:"
 )
 
 def get_state_variable(var_name, default_value):
