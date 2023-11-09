@@ -85,7 +85,7 @@ def display_page():
 
     def transcribe_audio(audio_file_path):
         with open(audio_file_path, 'rb') as audio_file:
-            transcription = openai.Audio.create(
+            transcription = openai.audio.transcriptions.create(
                 model="whisper-1", 
                 file=audio_file,
                 language="en"  # Set the language to English
