@@ -90,7 +90,8 @@ def display_page():
                 file=audio_file,
                 language="en"  # Set the language to English
             )
-        return transcription['text']  # Access the transcription text using the ['text'] key
+        return transcription.text  # Here, we use .text instead of ['text']
+
 
 
     def meeting_minutes(transcription):
