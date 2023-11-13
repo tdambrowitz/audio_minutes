@@ -97,7 +97,7 @@ def display_page():
     def meeting_minutes(transcription):
         word_count = len(transcription.split())
         # Calculate sleep duration: 4 seconds for every 1000 words
-        sleep_duration = (word_count / 1000) * 4
+        sleep_duration = (word_count / 1000) * 1
 
         # Ensure minimum sleep time (e.g., 2 seconds) if transcription is very short
         sleep_duration = max(sleep_duration, 2)
