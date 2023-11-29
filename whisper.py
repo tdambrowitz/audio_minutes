@@ -125,6 +125,7 @@ def display_page():
         }
         
     def abstract_summary_extraction(transcription, additional_context):
+        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -135,13 +136,14 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
+                    "content": prompt
                 }
             ],
             max_tokens=2000,
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
+        st.write(prompt)
         return summary_content
 
 
@@ -187,6 +189,7 @@ def display_page():
         return summary_content
 
     def sentiment_analysis(transcription, additional_context):
+        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -197,13 +200,14 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
+                    "content": prompt
                 }
             ],
             max_tokens=2000,
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
+        st.write(prompt)
         return summary_content
     
     def save_as_docx(minutes, filename):
