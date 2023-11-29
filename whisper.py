@@ -135,11 +135,7 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": additional_context  # Providing additional context as a separate prompt
-                },
-                {
-                    "role": "user",
-                    "content": transcription
+                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
                 }
             ],
             max_tokens=2000,
@@ -160,11 +156,7 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": additional_context  # Providing additional context as a separate prompt
-                },
-                {
-                    "role": "user",
-                    "content": transcription
+                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
                 }
             ],
             max_tokens=2000,
@@ -185,11 +177,7 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": additional_context  # Providing additional context as a separate prompt
-                },
-                {
-                    "role": "user",
-                    "content": transcription
+                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
                 }
             ],
             max_tokens=2000,
@@ -209,11 +197,7 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": additional_context  # Providing additional context as a separate prompt
-                },
-                {
-                    "role": "user",
-                    "content": transcription
+                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
                 }
             ],
             max_tokens=2000,
