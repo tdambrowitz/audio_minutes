@@ -97,10 +97,10 @@ def display_page():
     def meeting_minutes(transcription, additional_context):
         word_count = len(transcription.split())
         # Calculate sleep duration: 4 seconds for every 1000 words
-        sleep_duration = (word_count / 1000) * 1
+        sleep_duration = (word_count / 1000) * .5
 
         # Ensure minimum sleep time (e.g., 2 seconds) if transcription is very short
-        sleep_duration = max(sleep_duration, 2)
+        sleep_duration = max(sleep_duration, 1)
 
         # Sleep dynamically based on the number of words in the transcription
         time.sleep(sleep_duration)
@@ -148,6 +148,7 @@ def display_page():
 
 
     def key_points_extraction(transcription, additional_context):
+        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -158,7 +159,7 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
+                    "content": prompt
                 }
             ],
             max_tokens=2000,
@@ -169,6 +170,7 @@ def display_page():
 
 
     def action_item_extraction(transcription, additional_context):
+        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -179,7 +181,7 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": f"{additional_context}\nTranscription:\n\"{transcription}\""
+                    "content": prompt
                 }
             ],
             max_tokens=2000,
