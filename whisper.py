@@ -224,7 +224,7 @@ def display_page():
         doc.save(filename)
 
     # Parameters
-    chunk_length = 3 * 60  # 3 minutes in seconds
+    chunk_length = 2 * 60  # 3 minutes in seconds
 
     def main():
         # Initialize Streamlit interface
