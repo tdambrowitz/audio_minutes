@@ -94,7 +94,7 @@ def display_page():
 
 
 
-    def meeting_minutes(transcription):
+    def meeting_minutes(transcription, additional_context):
         word_count = len(transcription.split())
         # Calculate sleep duration: 4 seconds for every 1000 words
         sleep_duration = (word_count / 1000) * 1
@@ -105,16 +105,16 @@ def display_page():
         # Sleep dynamically based on the number of words in the transcription
         time.sleep(sleep_duration)
 
-        abstract_summary = abstract_summary_extraction(transcription)
+        abstract_summary = abstract_summary_extraction(transcription, additional_context)
         time.sleep(sleep_duration)  # Repeat sleep after each processing step
 
-        key_points = key_points_extraction(transcription)
+        key_points = key_points_extraction(transcription, additional_context)
         time.sleep(sleep_duration)
 
-        action_items = action_item_extraction(transcription)
+        action_items = action_item_extraction(transcription, additional_context)
         time.sleep(sleep_duration)
 
-        sentiment = sentiment_analysis(transcription)
+        sentiment = sentiment_analysis(transcription, additional_context)
         # no need to sleep after the last step since the function is about to return
 
         return {
@@ -124,7 +124,7 @@ def display_page():
             'sentiment': sentiment
         }
         
-    def abstract_summary_extraction(transcription):
+    def abstract_summary_extraction(transcription, additional_context):
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -135,6 +135,10 @@ def display_page():
                 },
                 {
                     "role": "user",
+                    "content": additional_context  # Providing additional context as a separate prompt
+                },
+                {
+                    "role": "user",
                     "content": transcription
                 }
             ],
@@ -145,7 +149,7 @@ def display_page():
         return summary_content
 
 
-    def key_points_extraction(transcription):
+    def key_points_extraction(transcription, additional_context):
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -156,24 +160,7 @@ def display_page():
                 },
                 {
                     "role": "user",
-                    "content": transcription
-                }
-            ],
-            max_tokens=2000,
-        )
-        # Access the content directly from the response object's attributes
-        summary_content = response.choices[0].message.content
-        return summary_content
-
-
-    def action_item_extraction(transcription):
-        response = openai.chat.completions.create(
-            model="gpt-4-1106-preview",
-            temperature=0,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are an AI expert in analyzing conversations and extracting action items. Please review the text and identify any tasks, assignments, or actions that were agreed upon or mentioned as needing to be done. These could be tasks assigned to specific individuals, or general actions that the group has decided to take. Please list these action items clearly and concisely."
+                    "content": additional_context  # Providing additional context as a separate prompt
                 },
                 {
                     "role": "user",
@@ -186,7 +173,32 @@ def display_page():
         summary_content = response.choices[0].message.content
         return summary_content
 
-    def sentiment_analysis(transcription):
+
+    def action_item_extraction(transcription, additional_context):
+        response = openai.chat.completions.create(
+            model="gpt-4-1106-preview",
+            temperature=0,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an AI expert in analyzing conversations and extracting action items. Please review the text and identify any tasks, assignments, or actions that were agreed upon or mentioned as needing to be done. These could be tasks assigned to specific individuals, or general actions that the group has decided to take. Please list these action items clearly and concisely."
+                },
+                {
+                    "role": "user",
+                    "content": additional_context  # Providing additional context as a separate prompt
+                },
+                {
+                    "role": "user",
+                    "content": transcription
+                }
+            ],
+            max_tokens=2000,
+        )
+        # Access the content directly from the response object's attributes
+        summary_content = response.choices[0].message.content
+        return summary_content
+
+    def sentiment_analysis(transcription, additional_context):
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -194,6 +206,10 @@ def display_page():
                 {
                     "role": "system",
                     "content": "As an AI with expertise in language and emotion analysis, your task is to analyze the sentiment of the following text. Please consider the overall tone of the discussion, the emotion conveyed by the language used, and the context in which words and phrases are used. Indicate whether the sentiment is generally positive, negative, or neutral, and provide brief explanations for your analysis where possible."
+                },
+                {
+                    "role": "user",
+                    "content": additional_context  # Providing additional context as a separate prompt
                 },
                 {
                     "role": "user",
@@ -229,6 +245,11 @@ def display_page():
 
         if uploaded_audio is not None:
             # Button to trigger transcription and processing
+            # Text area for additional context or notes
+            if 'additional_context' not in st.session_state:
+                st.session_state.additional_context = ""
+
+            st.session_state.additional_context = st.text_area("Provide additional context or notes for the AI:", value=st.session_state.additional_context)
             if st.button('Transcribe and Analyze'):
                 # Process the audio
                 with st.spinner('Processing audio...'):
@@ -252,7 +273,7 @@ def display_page():
 
                     # Generate meeting minutes
                     with st.spinner('Generating meeting minutes... this might take a while'):
-                        minutes = meeting_minutes(full_transcription)
+                        minutes = meeting_minutes(full_transcription, st.session_state.additional_context)
 
                         # Display meeting minutes details
                         st.subheader("Meeting Minutes")
