@@ -143,7 +143,7 @@ def display_page():
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
-        st.write(prompt)
+        #st.write(prompt)
         return summary_content
 
 
@@ -209,7 +209,7 @@ def display_page():
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
-        st.write(prompt)
+        #st.write(prompt)
         return summary_content
     
     def save_as_docx(minutes, filename):
@@ -224,7 +224,7 @@ def display_page():
         doc.save(filename)
 
     # Parameters
-    chunk_length = 2 * 60  # 3 minutes in seconds
+    chunk_length = 3 * 60  # 3 minutes in seconds
 
     def main():
         # Initialize Streamlit interface
