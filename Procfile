@@ -1,1 +1,1 @@
-web: streamlit run whisper.py
+web: streamlit run whisper.py --server.port 80
