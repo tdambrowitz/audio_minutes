@@ -11,7 +11,7 @@ import math
 from openai import OpenAI
 
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 client = OpenAI()
 
@@ -354,7 +354,7 @@ def check_password():
 
             
         
-        if password == st.secrets["db_password"]:
+        if password == os.environ.get("db_password"):
             st.session_state.is_authenticated = True
             st.rerun()
         elif password:
