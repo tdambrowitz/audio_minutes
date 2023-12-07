@@ -6,7 +6,7 @@ import numpy as np
 import streamlit as st
 import time
 from pydub import AudioSegment
-import ffmpeg
+from moviepy.editor import *
 import math
 from openai import OpenAI
 client = OpenAI()
