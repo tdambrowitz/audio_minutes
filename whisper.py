@@ -293,7 +293,7 @@ def display_page():
             audio_clip.close()  # It's good practice to close the clip when done
             return True
         except Exception as e:
-            print(f"Failed to convert {audio_path} to MP3: {e}")
+            st.write(f"Failed to convert {audio_path} to MP3: {e}")
             return False
 
     def save_uploaded_file(uploaded_file):
