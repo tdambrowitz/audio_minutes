@@ -1,0 +1,1 @@
+web: streamlit run whisper.py
