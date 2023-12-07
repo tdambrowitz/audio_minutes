@@ -310,24 +310,24 @@ def display_page():
 
             with open(temp_path, "wb") as f:
                 f.write(uploaded_file.getbuffer())
-                print(f"File saved temporarily at {temp_path}")
+                st.write(f"File saved temporarily at {temp_path}")
 
             # If the uploaded file is .m4a, convert it to .mp3
             if file_extension == '.m4a':
-                print(f"Converting {temp_path} to {target_path}")
+                st.write(f"Converting {temp_path} to {target_path}")
                 # Verify tempfile exists before attempting conversion
                 if os.path.exists(temp_path):
                     convert_to_mp3(temp_path, target_path)
                     # Verify conversion was successful
                     if os.path.exists(target_path):
-                        print(f"Conversion successful, file saved at {target_path}")
+                        st.write(f"Conversion successful, file saved at {target_path}")
                         os.remove(temp_path)  # Remove the .m4a file after conversion
                         return target_path
                     else:
-                        print(f"Conversion failed, file at {target_path} not found")
+                        st.write(f"Conversion failed, file at {target_path} not found")
                         return None
                 else:
-                    print(f"Temp file at {temp_path} does not exist, cannot convert")
+                    st.write(f"Temp file at {temp_path} does not exist, cannot convert")
                     return None
             elif file_extension in ['.mp3', '.wav']:
                 return temp_path
