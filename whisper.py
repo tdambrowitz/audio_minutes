@@ -291,7 +291,7 @@ def display_page():
             audio_clip = AudioFileClip(audio_path)
             audio_clip.write_audiofile(target_path, bitrate=bitrate)
             audio_clip.close()  # It's good practice to close the clip when done
-            st.write(f"Successfully converted {audio_path} to MP3")
+            print(f"Successfully converted {audio_path} to MP3")
             return True
         except Exception as e:
             st.write(f"Failed to convert {audio_path} to MP3: {e}")
