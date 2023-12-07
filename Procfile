@@ -1,1 +1,1 @@
-web: streamlit run whisper.py --server.port $PORT
+web: streamlit run whisper.py --server.port 8000
