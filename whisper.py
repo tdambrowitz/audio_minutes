@@ -114,10 +114,10 @@ def display_page():
         sleep_duration = (word_count / 1000) * .5
 
         # Ensure minimum sleep time (e.g., 2 seconds) if transcription is very short
-        sleep_duration = max(sleep_duration, 1)
+        sleep_duration = max(sleep_duration, .5)
 
         # Sleep dynamically based on the number of words in the transcription
-        time.sleep(sleep_duration)
+        #time.sleep(sleep_duration)
 
         abstract_summary = abstract_summary_extraction(transcription, formatted_context)
         time.sleep(sleep_duration)  # Repeat sleep after each processing step
