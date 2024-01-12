@@ -64,6 +64,17 @@ def display_page():
             break  # If chunk sizes are okay, break out of the loop and return chunks
 
         return chunks
+    
+    def format_additional_context(context):
+        if context.strip():  # Check if context is not empty or just whitespace
+            formatted_context = (
+                "This is some additional context to ensure you complete your task correctly.\n"
+                f"{context}\n"
+                "Keeping this in mind, please proceed with your task."
+            )
+            return formatted_context
+        else:
+            return ""  # Return an empty string if the context provided by the user is empty
 
     def transcribe_chunks_sf(chunks):
         transcriptions = []
@@ -97,7 +108,7 @@ def display_page():
 
 
 
-    def meeting_minutes(transcription, additional_context):
+    def meeting_minutes(transcription, formatted_context):
         word_count = len(transcription.split())
         # Calculate sleep duration: 4 seconds for every 1000 words
         sleep_duration = (word_count / 1000) * .5
@@ -108,16 +119,16 @@ def display_page():
         # Sleep dynamically based on the number of words in the transcription
         time.sleep(sleep_duration)
 
-        abstract_summary = abstract_summary_extraction(transcription, additional_context)
+        abstract_summary = abstract_summary_extraction(transcription, formatted_context)
         time.sleep(sleep_duration)  # Repeat sleep after each processing step
 
-        key_points = key_points_extraction(transcription, additional_context)
+        key_points = key_points_extraction(transcription, formatted_context)
         time.sleep(sleep_duration)
 
-        action_items = action_item_extraction(transcription, additional_context)
+        action_items = action_item_extraction(transcription, formatted_context)
         time.sleep(sleep_duration)
 
-        sentiment = sentiment_analysis(transcription, additional_context)
+        sentiment = sentiment_analysis(transcription, formatted_context)
         # no need to sleep after the last step since the function is about to return
 
         return {
@@ -127,8 +138,8 @@ def display_page():
             'sentiment': sentiment
         }
         
-    def abstract_summary_extraction(transcription, additional_context):
-        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
+    def abstract_summary_extraction(transcription, formatted_context):
+        prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -150,8 +161,8 @@ def display_page():
         return summary_content
 
 
-    def key_points_extraction(transcription, additional_context):
-        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
+    def key_points_extraction(transcription, formatted_context):
+        prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -172,8 +183,8 @@ def display_page():
         return summary_content
 
 
-    def action_item_extraction(transcription, additional_context):
-        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
+    def action_item_extraction(transcription, formatted_context):
+        prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -193,8 +204,8 @@ def display_page():
         summary_content = response.choices[0].message.content
         return summary_content
 
-    def sentiment_analysis(transcription, additional_context):
-        prompt = f"{additional_context}\nTranscription:\n\"{transcription}\""
+    def sentiment_analysis(transcription, formatted_context):
+        prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
             temperature=0,
@@ -266,7 +277,11 @@ def display_page():
 
                     # Generate meeting minutes
                     with st.spinner('Generating meeting minutes... this might take a while'):
-                        minutes = meeting_minutes(full_transcription, st.session_state.additional_context)
+                        # When you're fetching the additional context from the text area:
+                        formatted_context = format_additional_context(st.session_state.additional_context)
+
+                        # And when you're passing it to the meeting_minutes() function:
+                        minutes = meeting_minutes(full_transcription, formatted_context)
 
                         # Display meeting minutes details
                         st.subheader("Meeting Minutes")
