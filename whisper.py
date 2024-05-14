@@ -141,7 +141,7 @@ def display_page():
     def abstract_summary_extraction(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="gpt-4o",
             temperature=0,
             messages=[
                 {
@@ -164,7 +164,7 @@ def display_page():
     def key_points_extraction(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="gpt-4o",
             temperature=0,
             messages=[
                 {
@@ -186,7 +186,7 @@ def display_page():
     def action_item_extraction(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="gpt-4o",
             temperature=0,
             messages=[
                 {
@@ -207,7 +207,7 @@ def display_page():
     def sentiment_analysis(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="gpt-4o",
             temperature=0,
             messages=[
                 {
