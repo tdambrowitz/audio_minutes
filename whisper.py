@@ -141,7 +141,7 @@ def display_page():
     def abstract_summary_extraction(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-2024-08-06",
             temperature=0,
             messages=[
                 {
@@ -153,7 +153,7 @@ def display_page():
                     "content": prompt
                 }
             ],
-            max_tokens=2000,
+            max_tokens=8000,
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
@@ -164,7 +164,7 @@ def display_page():
     def key_points_extraction(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-2024-08-06",
             temperature=0,
             messages=[
                 {
@@ -176,7 +176,7 @@ def display_page():
                     "content": prompt
                 }
             ],
-            max_tokens=2000,
+            max_tokens=8000,
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
@@ -186,7 +186,7 @@ def display_page():
     def action_item_extraction(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-2024-08-06",
             temperature=0,
             messages=[
                 {
@@ -198,7 +198,7 @@ def display_page():
                     "content": prompt
                 }
             ],
-            max_tokens=2000,
+            max_tokens=8000,
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
@@ -207,7 +207,7 @@ def display_page():
     def sentiment_analysis(transcription, formatted_context):
         prompt = f"{formatted_context}\nTranscription:\n\"{transcription}\""
         response = openai.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-2024-08-06",
             temperature=0,
             messages=[
                 {
@@ -219,7 +219,7 @@ def display_page():
                     "content": prompt
                 }
             ],
-            max_tokens=2000,
+            max_tokens=8000,
         )
         # Access the content directly from the response object's attributes
         summary_content = response.choices[0].message.content
